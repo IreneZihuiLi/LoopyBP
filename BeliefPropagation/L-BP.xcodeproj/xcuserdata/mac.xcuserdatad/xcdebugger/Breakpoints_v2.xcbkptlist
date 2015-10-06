@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "L-BP/StatTools.swift"
+            timestampString = "462134808.882906"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "dotProductOfArray(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "L_BP.dotProductOfArray (Swift.Array&lt;Swift.Array&lt;Swift.Double&gt;&gt;) -&gt; Swift.Double"
+                  moduleName = "L-BP"
+                  urlString = "file:///Users/mac/Documents/Swift/L-BP/L-BP/StatTools.swift"
+                  timestampString = "462120644.450679"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "1892">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "L_BP.dotProductOfArray (Swift.Array&lt;Swift.Array&lt;Swift.Double&gt;&gt;) -&gt; Swift.Double"
+                  moduleName = "L-BP"
+                  urlString = "file:///Users/mac/Documents/Swift/L-BP/L-BP/StatTools.swift"
+                  timestampString = "462120644.450913"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "1901">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "L-BP/StatTools.swift"
+            timestampString = "462134808.882906"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "multiplicationOfArrays(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "L-BP/ConditionalProbability.swift"
+            timestampString = "462134808.882906"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "ConditionalProbability"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "L_BP.ConditionalProbability.init (L_BP.ConditionalProbability.Type)(conditions : Swift.String) -&gt; L_BP.ConditionalProbability"
+                  moduleName = "L-BP"
+                  urlString = "file:///Users/mac/Documents/Swift/L-BP/L-BP/ConditionalProbability.swift"
+                  timestampString = "462120644.452042"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "59">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "L_BP.ConditionalProbability.init (L_BP.ConditionalProbability.Type)(probs : (x : Swift.Double, y : Swift.Double)) -&gt; L_BP.ConditionalProbability"
+                  moduleName = "L-BP"
+                  urlString = "file:///Users/mac/Documents/Swift/L-BP/L-BP/ConditionalProbability.swift"
+                  timestampString = "462120644.452235"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "55">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "L_BP.ConditionalProbability.condProbTable.getter : Swift.Dictionary&lt;Swift.String, Swift.Dictionary&lt;Swift.String, Swift.Double&gt;&gt;"
+                  moduleName = "L-BP"
+                  urlString = "file:///Users/mac/Documents/Swift/L-BP/L-BP/ConditionalProbability.swift"
+                  timestampString = "462120644.452406"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "L_BP.ConditionalProbability.condProbTable.setter : Swift.Dictionary&lt;Swift.String, Swift.Dictionary&lt;Swift.String, Swift.Double&gt;&gt;"
+                  moduleName = "L-BP"
+                  urlString = "file:///Users/mac/Documents/Swift/L-BP/L-BP/ConditionalProbability.swift"
+                  timestampString = "462120644.452586"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "L_BP.ConditionalProbability.condProbTable.materializeForSet : Swift.Dictionary&lt;Swift.String, Swift.Dictionary&lt;Swift.String, Swift.Double&gt;&gt;"
+                  moduleName = "L-BP"
+                  urlString = "file:///Users/mac/Documents/Swift/L-BP/L-BP/ConditionalProbability.swift"
+                  timestampString = "462120644.452735"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "L-BP/ConditionalProbability.swift"
+            timestampString = "462134808.882906"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "setPriorProbTable(_:probs:state:conditionState:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "L-BP/ConditionalProbability.swift"
+            timestampString = "462134808.882906"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "getPriorProbTable(_:state:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "L-BP/BayesianNetwork.swift"
+            timestampString = "462134808.882906"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "setPriorProbTable(_:series:state:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
