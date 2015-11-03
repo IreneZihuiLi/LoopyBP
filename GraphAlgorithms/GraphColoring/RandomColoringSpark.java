@@ -14,28 +14,44 @@ import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import com.tinkerpop.blueprints.*;
-import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
+import org.apache.commons.configuration.Configuration;
+import org.apache.tinkerpop.gremlin.hadoop.process.computer.spark.SparkGraphComputer;
+import org.apache.tinkerpop.gremlin.hadoop.structure.HadoopGraph;
+import org.apache.tinkerpop.gremlin.structure.Direction;
+import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.apache.tinkerpop.gremlin.structure.T;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.apache.tinkerpop.gremlin.structure.VertexProperty;
+import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 
-public class RandomColoring {
+//import com.tinkerpop.blueprints.*;
+//import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
+
+public class RandomColoringSpark {
 
 	// Colored Map: <colorStateNumber,summary>
 	public static final Map<Integer, ArrayList<Integer>> coloredMap = new HashMap<Integer, ArrayList<Integer>>();
-	
 	// The global graph variable
-	public static TinkerGraph graph = null;
+	public static Graph graph = null;
 	public static int graphSize = 0;
+	public static SparkGraphComputer spark = null;
+	public static HadoopGraph hadoopGraph = null;
+	
 	public static void main(String[] args) throws IOException {
 
 		// Load in the graph
-		graph = new  TinkerGraph();
+		graph =  TinkerGraph.open();
 		
+		// Need to copy?
+		hadoopGraph = HadoopGraph.open();
+
 		// I loaded from a csv file
 		String filename = "data/test0_3_58_1355.csv";
 		load(filename);
+		
+		
 		// show a brief info of the graph
 		System.out.println("\nGraph:" + graph.toString() + "\n"+coloredMap.toString());	
-//		show(graph);
 		
 		// Do Jones-Plassmann Graph Coloring
 		doRandomColoring();
@@ -90,24 +106,25 @@ public class RandomColoring {
 		Vertex vertex1;
 		Vertex vertex2;
 		// Read in vertex 1
-		if(graph.getVertex(id1)!=null){
-			vertex1 = graph.getVertex(id1);
-			vertex1.setProperty("weight", prop1);
-			vertex1.setProperty("colored", 0);
+		if(graph.vertices(id1).hasNext()){
+			vertex1 = graph.vertices(id1).next();
 		}else{
-			vertex1 = graph.addVertex(id1);
+			vertex1 = graph.addVertex(T.label, "vertex", T.id, id1, "weight",prop1, "colored",0);
 		}
 		
 		
 
-		if(graph.getVertex(id2)!=null){
-			vertex2 = graph.getVertex(id2);
+		if(graph.vertices(id2).hasNext()){
+			vertex2 = graph.vertices(id2).next();
 		}else{
-			vertex2 = graph.addVertex(id2);
+			
+			vertex2 = graph.addVertex(T.label, "vertex", T.id, id2, "weight",prop2,"colored",0);
+
 		}
 
 		// add the Edge
-		graph.addEdge(null,vertex1,vertex2, "edge");
+//		graph.edge(null,vertex1,vertex2, "edge");
+		vertex1.addEdge("edge", vertex2, "properties", propEdge);
 
 	}
 
@@ -118,13 +135,13 @@ public class RandomColoring {
 		int sum=0;
 		ArrayList<Integer> initRandom = new ArrayList<Integer>();
 		initRandom = getRandomVertices(randomColor, 40,initRandom);
-		System.out.println("InitRandom "+initRandom.toString());
+//		System.out.println("InitRandom "+initRandom.toString());
 		
 		// if graph is not empty
 		while ((sum<graphSize)){
 			// do coloring in a group
 			
-			System.out.println("sum "+sum);
+//			System.out.println("sum "+sum);
 			randomColor++;
 			sum+=initRandom.size();
 
@@ -132,7 +149,7 @@ public class RandomColoring {
 
 		}
 		
-		System.out.println("Cut!");
+//		System.out.println("Cut!");
 	}
 
 	// Randomly get a group of vertices by ID
@@ -147,11 +164,11 @@ public class RandomColoring {
 		Random random=new Random();
 		//if initialized,Id should be all the vertices
 		if(initArrayList.size()==0){
-			Iterator<Vertex> vertexItorIterator = graph.getVertices().iterator();
+			Iterator<Vertex> vertexItorIterator = graph.vertices();
 			
 			while (vertexItorIterator.hasNext()) {
 				Vertex vertex=vertexItorIterator.next();
-				int id=Integer.parseInt(vertex.getId().toString());
+				int id=Integer.parseInt(vertex.id().toString());
 				list.add(id);
 			}
 			
@@ -171,19 +188,18 @@ public class RandomColoring {
 		
 		else{
 			// get neighours of init arraylist
-			System.out.println("Second Time\n"+initArrayList.toString());
+//			System.out.println("Second Time\n"+initArrayList.toString());
 			// assign neighbors
 			for (int m = 0; m < initArrayList.size(); m++) {
-				Vertex vertex = graph.getVertex(initArrayList.get(m));
+				Vertex vertex = graph.vertices(initArrayList.get(m)).next();
 //				System.out.println("Current "+vertex.getId());
 				// Get adjacent vertices
-				Iterator<Vertex> ajacent = vertex.getVertices(Direction.OUT)
-						.iterator();
+				Iterator<Vertex> ajacent = vertex.vertices(Direction.OUT);
 				
 
 				while (ajacent.hasNext()) {
 					Vertex neighbour = ajacent.next();
-					int newId = Integer.parseInt(neighbour.getId().toString());
+					int newId = Integer.parseInt(neighbour.id().toString());
 //					System.out.println("Nei: "+newId); 
 //					System.out.println("Color:" + isColored(neighbour)+";");
 					if ((!isColored(neighbour)) && (!list.contains(newId))) {
@@ -198,7 +214,7 @@ public class RandomColoring {
 			while (delt < (list.size()/3)) {
 
 				int index = random.nextInt(list.size() - 1);
-				System.out.println("Index " + index+"\tdelt "+delt+"\tlist"+list.size());
+//				System.out.println("Index " + index+"\tdelt "+delt+"\tlist"+list.size());
 				int id = list.get(index);
 				if (!chosen.contains(id)) {
 					chosen.add(id);
@@ -208,24 +224,24 @@ public class RandomColoring {
 
 		}
 		
-		System.out.println("-- Chosen size "+chosen.size());
+//		System.out.println("-- Chosen size "+chosen.size());
 
 			
 			
-			//delete neighbours
-		System.out.println("Chosen size "+chosen.size());
+		//delete neighbours
+//		System.out.println("Chosen size "+chosen.size());
 		for(int i=0;i<chosen.size();i++){
 			
 			int currentId = chosen.get(i);
 			// get neighours
-			Vertex vertex = graph.getVertex(currentId);
+			Vertex vertex = graph.vertices(currentId).next();
 			ArrayList<Integer> neighbours = new ArrayList<Integer>();
-			Iterator<Vertex> ajacent = vertex.getVertices(Direction.OUT).iterator();
+			Iterator<Vertex> ajacent = vertex.vertices(Direction.OUT);
 //			System.out.println("----");
 			//get a neighbour list
 			while (ajacent.hasNext()) {
 				Vertex neighbour=ajacent.next();
-				neighbours.add(Integer.parseInt(neighbour.getId().toString()));
+				neighbours.add(Integer.parseInt(neighbour.id().toString()));
 			}
 
 			// check existance
@@ -242,24 +258,25 @@ public class RandomColoring {
 			}
 		}
 		
-//		System.err.println("Cuts!");
-		//Color the Vertex in the chosen(list)
+		
+		//Parallel Coloring----Do Gibbs Sampling in feach vertex
 		for(int i=0;i<chosen.size();i++){
-			Vertex vertex = graph.getVertex(chosen.get(i));
+			Vertex vertex = graph.vertices(chosen.get(i)).next();
 		
 			doColor(vertex);
-			System.err.println("Color vertex "+vertex.getId()+"\tColor"+vertex.getProperty("colored"));
+			System.err.println("Color vertex "+vertex.id()+"\tColor"+vertex.property("colored").value());
 
 		}
-		System.out.println("Chosen "+chosen.size());
+//		System.out.println("Chosen "+chosen.size());
 
+		
 		
 		return chosen;
 	}
 
 	public static boolean isColored(Vertex vertex) {
 
-		if (!((Integer)vertex.getProperty("colored")).equals(0)) {
+		if (vertex.property("colored").value().equals(0)) {
 			return true;
 		}
 		return false;
@@ -277,20 +294,21 @@ public class RandomColoring {
 		if(coloredMap.size()==0){
 //			color=1;
 			ArrayList<Integer> array=new ArrayList<Integer>();
-			array.add(Integer.parseInt(vertex.getId().toString()));
+			array.add(Integer.parseInt(vertex.id().toString()));
 			coloredMap.put(color, array);
-			System.out.println("Init....");
+//			System.out.println("Init....");
 		
 		}else{
 			
 			//find neighbour colors
-			Iterator<Vertex> ajacent = vertex.getVertices(Direction.OUT).iterator();
+			Iterator<Vertex> ajacent = vertex.vertices(Direction.OUT);
 			Set<Integer> neighbours = new HashSet();
 			
 			while (ajacent.hasNext()) {
 				Vertex neighbour=ajacent.next();
 				if(isColored(neighbour)){
-					neighbours.add(neighbour.getProperty("colored"));
+					int state = Integer.parseInt((neighbour.property("colored").value().toString()));
+					neighbours.add(state);
 				}
 			}
 			
@@ -303,7 +321,7 @@ public class RandomColoring {
 //				System.out.println("Neighbours colors "+neighbours.toString());
 
 				ArrayList<Integer> array=new ArrayList<Integer>();
-				array.add(Integer.parseInt(vertex.getId().toString()));
+				array.add(Integer.parseInt(vertex.id().toString()));
 				
 				coloredMap.put(coloredMap.size()+1, array);
 //				color=coloredMap.size()+1;
@@ -311,7 +329,7 @@ public class RandomColoring {
 				//find min
 				int key= getMinumColor();
 				ArrayList<Integer> array = coloredMap.get(key);
-				array.add(Integer.parseInt(vertex.getId().toString()));
+				array.add(Integer.parseInt(vertex.id().toString()));
 //				System.out.println("--------- color Old: "+ key);
 //				System.out.println("Neighbours colors "+neighbours.toString());
 				
@@ -323,7 +341,7 @@ public class RandomColoring {
 		}
 		
 		
-		vertex.setProperty("colored", color);
+		vertex.property(VertexProperty.Cardinality.single,"colored",color);
 		
 
 	}
@@ -346,12 +364,12 @@ public class RandomColoring {
 	
 	public static Boolean allColored(){
 
-		Iterator<Vertex> vertexItorIterator = graph.getVertices().iterator();
+		Iterator<Vertex> vertexItorIterator = graph.vertices();
 		
 		while (vertexItorIterator.hasNext()) {
 			Vertex vertex=vertexItorIterator.next();
-//			System.out.println("IF? "+vertex.getProperty("colored"));
-			if((vertex.getProperty("colored")).equals(0))
+			System.out.println("IF? "+vertex.property("colored").value());
+			if((vertex.property("colored").value()).equals(0))
 				return false;
 		
 		}
@@ -364,7 +382,7 @@ public class RandomColoring {
 	public static int getGraphSize(){
 		int size=0;
 		// get size of the graph
-		Iterator<Vertex> vertexItorIterator = graph.getVertices().iterator();
+		Iterator<Vertex> vertexItorIterator = graph.vertices();
 
 		while (vertexItorIterator.hasNext()) {
 			Vertex vertex = vertexItorIterator.next();
@@ -373,11 +391,11 @@ public class RandomColoring {
 		return size;
 	}
 	public static void show(Graph graph){
-		Iterator<Vertex> vertexItorIterator = graph.getVertices().iterator();
+		Iterator<Vertex> vertexItorIterator = graph.vertices();
 		
 		while (vertexItorIterator.hasNext()) {
 			Vertex vertex=vertexItorIterator.next();
-			System.out.println(" " + vertex.getId()+"\t"+vertex.getProperty("colored"));
+			System.out.println(" " + vertex.id()+"\t"+vertex.property("colored").value());
 		
 		}
 		
@@ -385,13 +403,3 @@ public class RandomColoring {
 
 }
 
-/**
- * PS I was trying to implement the coloring by setting a property: "colored",4
- * But I was following the tutorial here:
- * http://www.tinkerpop.com/docs/3.0.0.M1/#_mutating_the_graph in this line:
- * blueprints.property("created",2010) I was notified an AbstractMethodError.
- * 
- * I think I used a wrong API, but in my case, I set up another HashMap to store
- * the state of colors.
- * 
- */
